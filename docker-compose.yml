@@ -1,0 +1,19 @@
+services:
+  print-api:
+    build: .
+    container_name: print-api
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "7101:7101"
+    volumes:
+      - ./data:/data
+    networks:
+      - printnet
+
+# Rango fijo que NO choca con la LAN 192.168.1.x
+networks:
+  printnet:
+    ipam:
+      config:
+        - subnet: 10.150.0.0/24
